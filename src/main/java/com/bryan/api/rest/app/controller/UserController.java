@@ -43,16 +43,16 @@ public class UserController {
 		// return
 		// ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
 
-		user.setFotoUrl(s3Service.getObjectUrl(user.getFotoPath()));
-		user.setCedulaUrl(s3Service.getObjectUrl(user.getCedulaPath()));
-		if (StringUtils.endsWithIgnoreCase(user.getFotoPath(), "jpg")
-				&& StringUtils.endsWithIgnoreCase(user.getCedulaPath(), "pdf")) {
+		user.setFotoUrl(s3Service.getObjectUrl(user.getFoto()));
+		user.setCedulaUrl(s3Service.getObjectUrl(user.getCedula()));
+		if (StringUtils.endsWithIgnoreCase(user.getFoto(), "jpg")
+				&& StringUtils.endsWithIgnoreCase(user.getCedula(), "pdf")) {
 
 			userService.save(user);
 		} else {
 
 			throw new Exception("Error: Solo se permite CEDULA con extension .pdf y FOTO con extension .jpg.!!");
-		
+
 		}
 
 		return user;
@@ -74,7 +74,8 @@ public class UserController {
 
 	// Update an User
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody User userDetails, @PathVariable(value = "id") Long userId) {
+	public ResponseEntity<?> update(@RequestBody User userDetails, @PathVariable(value = "id") Long userId)
+			throws Exception {
 
 		Optional<User> user = userService.findById(userId);
 
@@ -88,8 +89,23 @@ public class UserController {
 		user.get().setClave(userDetails.getClave());
 		user.get().setEmail(userDetails.getEmail());
 		user.get().setEstado(userDetails.getEstado());
+		user.get().setCedula(userDetails.getCedula());
+		user.get().setFoto(userDetails.getFoto());
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user.get()));
+		userDetails.setFotoUrl(s3Service.getObjectUrl(userDetails.getFoto()));
+		userDetails.setCedulaUrl(s3Service.getObjectUrl(userDetails.getCedula()));
+
+		user.get().setCedulaUrl(userDetails.getCedulaUrl());
+		user.get().setFotoUrl(userDetails.getFotoUrl());
+
+		if (StringUtils.endsWithIgnoreCase(userDetails.getFoto(), "jpg")
+				&& StringUtils.endsWithIgnoreCase(userDetails.getCedula(), "pdf")) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user.get()));
+		} else {
+
+			throw new Exception("Error: Solo se permite CEDULA con extension .pdf y FOTO con extension .jpg.!!");
+
+		}
 
 	}
 
@@ -114,8 +130,8 @@ public class UserController {
 				.collect(Collectors.toList());
 
 		return userRepository.findAll().stream()
-				.peek(user -> user.setFotoUrl(s3Service.getObjectUrl(user.getFotoPath())))
-				.peek(user -> user.setCedulaUrl(s3Service.getObjectUrl(user.getCedulaPath())))
+				.peek(user -> user.setFotoUrl(s3Service.getObjectUrl(user.getFoto())))
+				.peek(user -> user.setCedulaUrl(s3Service.getObjectUrl(user.getCedula())))
 				.collect(Collectors.toList());
 	}
 

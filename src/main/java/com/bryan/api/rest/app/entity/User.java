@@ -29,12 +29,16 @@ public class User implements Serializable {
 	private String email;
 	private boolean estado;
 
-	private String cedulaPath;
-	
+	// ES CedulaPath
+	private String cedula;
+
+	@Transient
 	private String cedulaUrl;
 
-	private String fotoPath;
-	
+	// ES FotPath
+	private String foto;
+
+	@Transient
 	private String fotoUrl;
 
 	public Long getId() {
@@ -77,14 +81,6 @@ public class User implements Serializable {
 		this.estado = estado;
 	}
 
-	public String getCedulaPath() {
-		return cedulaPath;
-	}
-
-	public void setCedulaPath(String cedulaPath) {
-		this.cedulaPath = cedulaPath;
-	}
-
 	public String getCedulaUrl() {
 		return cedulaUrl;
 	}
@@ -93,20 +89,28 @@ public class User implements Serializable {
 		this.cedulaUrl = cedulaUrl;
 	}
 
-	public String getFotoPath() {
-		return fotoPath;
-	}
-
-	public void setFotoPath(String fotoPath) {
-		this.fotoPath = fotoPath;
-	}
-
 	public String getFotoUrl() {
 		return fotoUrl;
 	}
 
 	public void setFotoUrl(String fotoUrl) {
 		this.fotoUrl = fotoUrl;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 }
