@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "usuario")
@@ -27,6 +28,14 @@ public class User implements Serializable {
 	@Column(name = "mail", nullable = false, length = 50, unique = true)
 	private String email;
 	private boolean estado;
+
+	private String cedulaPath;
+	
+	private String cedulaUrl;
+
+	private String fotoPath;
+	
+	private String fotoUrl;
 
 	public Long getId() {
 		return id;
@@ -66,6 +75,38 @@ public class User implements Serializable {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+
+	public String getCedulaPath() {
+		return cedulaPath;
+	}
+
+	public void setCedulaPath(String cedulaPath) {
+		this.cedulaPath = cedulaPath;
+	}
+
+	public String getCedulaUrl() {
+		return cedulaUrl;
+	}
+
+	public void setCedulaUrl(String cedulaUrl) {
+		this.cedulaUrl = cedulaUrl;
+	}
+
+	public String getFotoPath() {
+		return fotoPath;
+	}
+
+	public void setFotoPath(String fotoPath) {
+		this.fotoPath = fotoPath;
+	}
+
+	public String getFotoUrl() {
+		return fotoUrl;
+	}
+
+	public void setFotoUrl(String fotoUrl) {
+		this.fotoUrl = fotoUrl;
 	}
 
 }
