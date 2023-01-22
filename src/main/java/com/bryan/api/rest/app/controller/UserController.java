@@ -51,7 +51,7 @@ public class UserController {
 			userService.save(user);
 		} else {
 
-			throw new Exception("Error: Solo se permite CEDULA con extension .pdf y FOTO con eztension .jpg.!!");
+			throw new Exception("Error: Solo se permite CEDULA con extension .pdf y FOTO con extension .jpg.!!");
 		
 		}
 
